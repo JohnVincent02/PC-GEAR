@@ -1,0 +1,86 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Delivery Boys</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        h2 {
+            margin-top: 30px;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+        .table thead th {
+            background-color: #343a40;
+            color: white;
+        }
+        .table img {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">New Delivery Boys</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Address</th>
+                        <th>Proof</th>
+                        <th>Photo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in viewdeliveryboy %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.deliveryboy_name }}</td>
+                        <td>{{ i.deliveryboy_email }}</td>
+                        <td>{{ i.deliveryboy_contact }}</td>
+                        <td>{{ i.deliveryboy_address }}</td>
+                        <td><img src="{{ i.deliveryboy_proof.url }}" width="60" height="60" alt="Proof"></td>
+                        <td><img src="{{ i.deliveryboy_photo.url }}" width="60" height="60" alt="Photo"></td>
+                        <td>
+                            {% if i.deliveryboy_status == 0 %}
+                                <a href="{% url 'Admin:rejectdeliveryboy' i.id %}" class="btn btn-danger btn-sm btn-action">Reject</a>
+                                <a href="{% url 'Admin:approvedeliveryboy' i.id %}" class="btn btn-success btn-sm">Approve</a>
+                            {% elif i.deliveryboy_status == 1 %}
+                                <span class="badge bg-success">Approved</span>
+                            {% elif i.deliveryboy_status == 2 %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+{% endblock %}
