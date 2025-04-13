@@ -1,0 +1,167 @@
+{% extends 'Shop/head.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIEW BOOKING</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+        .main-heading {
+            text-align: center;
+            color: #FF8C00;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .booking-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            overflow-x: auto;
+        }
+        .booking-table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) {
+            background-color: #fffaf0;
+        }
+        img {
+            border-radius: 4px;
+            border: 1px solid #FFD700;
+        }
+        .action-link {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 0 5px;
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .action-link:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+        .status-pending {
+            color: #FF8C00;
+            font-weight: bold;
+        }
+        .status-completed {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .status-delivered {
+            color: #3498db;
+            font-weight: bold;
+        }
+        .status-rejected {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <h1 class="main-heading">VIEW BOOKING</h1>
+        
+        <form action="" method="post">
+            {% csrf_token %}
+            <table class="booking-table">
+                <tr>
+                    <th>Sl No</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Product Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Photo</th>
+                    <th>Category</th>
+                    <th>Sub Category</th>
+                    <th>Status</th>
+                </tr>
+                {% for i in viewbooking %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.booking.user.user_name}}</td>
+                    <td>{{i.booking.user.user_email}}</td>
+                    <td>{{i.booking.user.user_contact}}</td>
+                    <td>{{i.booking.user.user_address}}</td>
+                    <td>{{i.product.product_details}}</td>
+                    <td>{{i.cart_qty}}</td> 
+                    <td>{{i.booking.booking_amount}}</td>  
+                    <td><img src="{{ i.product.product_photo.url }}" width="100" height="100"></td> 
+                    <td>{{i.product.sub_category.category.category_name}}</td>
+                    <td>{{i.product.sub_category.subcategory_name}}</td>
+                    <td>
+                        {% if i.booking.booking_status == 1 %} 
+                        <span class="status-pending">PENDING</span>
+                        {% elif i.booking.booking_status == 2 %}
+                        <span class="status-completed">PAYMENT COMPLETED</span> || <a href="{% url 'Shop:viewdeliveryboy' i.booking.id %}" class="action-link">VIEW DELIVERY AGENTS</a>
+                        {% elif i.booking.booking_status == 3 %}
+                        <span class="status-pending">PACKED</span>
+                        {% elif i.booking.booking_status == 4 %}
+                        <span class="status-rejected">REJECTED</span> || <a href="{% url 'Shop:viewdeliveryboy' i.booking.id %}" class="action-link">Reassign</a>
+                        {% elif i.booking.booking_status == 5 %}
+                        <span class="status-delivered">OUT FOR DELIVERY</span>
+                        {% elif i.booking.booking_status == 6 %}
+                        <span class="status-completed">DELIVERED</span> || <a href="{% url 'Shop:viewfeedback' i.product.id %}" class="action-link">VIEW FEEDBACK</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+
+    {% if msg %}
+    <script>
+        alert('{{msg}}')
+        window.location="{% url 'Shop:viewbooking' %}"
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}
