@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+</head>
+<body>
+
+    <h1>Simple Calculator</h1>
+
+    <form>
+        <table>
+            <tr>
+                <td>Number 1:</td>
+                <td><input type="number" id="num1" required></td>
+            </tr>
+            <tr>
+                <td>Number 2:</td>
+                <td><input type="number" id="num2" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="button" onclick="calculate()">Add</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Sum:</td>
+                <td><span id="result"></span></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            document.getElementById('result').textContent = num1 + num2;
+        }
+    </script>
+
+</body>
+</html>
