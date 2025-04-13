@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN REGISTRATION</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2 align="center">ADMIN REGSITRATION</h2>
+        <table align="center" border="1">
+            <tr>
+                <td>Name:<input type="text" name="name" id="name" value="{{edit.name}}"></td>
+                </tr>
+                <tr>
+                <td>Email<input type="text" name="email" id="email" value="{{edit.email}}"></td>
+                </tr>
+                <tr>
+                <td>Password<input type="password" name="password" id="password" value="{{edit.password}}"></td>
+
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="submit" name="btn_submit"></td>
+            </tr>
+        </table>
+        <table border="3" align="center">
+            <tr>
+                <td>Sl No</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Password</td>
+                <td>Action</td>
+            </tr>
+            {% for i in adminregistration %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.password}}</td>
+                <td><a href="{% url 'Admin:deleteadminregistration' i.id %}">Delete</a></td>
+                <td><a href="{% url 'Admin:editadminregistration' i.id %}">Edit</a></td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+
+</body>
+</html>
