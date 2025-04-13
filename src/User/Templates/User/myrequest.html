@@ -1,0 +1,83 @@
+{% extends 'User/Head.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPAIR REQUEST</title>
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+        table tr:first-child td {
+            background: linear-gradient(45deg, #ff9800, #ffd700);
+            color: black;
+            font-weight: bold;
+            padding: 15px;
+            font-size: 18px;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2 align="center">REPAIR REQUEST</h2>
+    <table border="1" align="center">
+        <tr>
+            <td>Sl no</td>
+            <td>To Date</td>
+            <td>Request Description</td>
+            <td>Request Date</td>
+            <td>Amount</td>
+            <td>Technician Name</td>
+            <td>Technician Contact</td>
+            <td>Request Status</td>
+            <td>Work Done</td>
+        </tr>
+        {% for i in myrequest %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.to_date }}</td>
+            <td>{{ i.req_desc }}</td>
+            <td>{{ i.req_date }}</td>
+            <td>
+                {% if i.req_amount %}
+                    {{ i.req_amount }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>{{ i.technician.technician_name }}</td>
+            <td>{{ i.technician.technician_contact }}</td>
+            <td>
+                {% if i.req_status == 0 %} 
+                    PENDING
+                {% elif i.req_status == 1 %}
+                    ACCEPTED
+                {% elif i.req_status == 2 %}
+                    REJECTED
+                {% elif i.req_status == 3 %}
+                    WORK COMPLETED<br>
+                    {% if i.req_amount %}
+                        The amount for service is {{ i.req_amount }}<br>
+                        <a href="{% url 'User:payment' i.id %}">Make Payment</a>
+                    {% else %}
+                        Amount is not updated
+                    {% endif %}
+                {% elif i.req_status == 4 %}
+                    PAID
+                {% endif %}
+            </td>
+            <td>{{ i.workdone_date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

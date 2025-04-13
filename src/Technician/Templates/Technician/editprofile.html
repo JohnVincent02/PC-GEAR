@@ -1,0 +1,108 @@
+{% extends 'Technician/head.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Technician Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .profile-heading {
+            text-align: center;
+            color: #FF8C00;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .profile-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .profile-table {
+            width: 100%;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        .profile-table th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: left;
+            width: 30%;
+            font-size: 16px;
+        }
+        .profile-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .profile-table input[type="text"] {
+            width: 90%;
+            padding: 10px 15px;
+            border: 2px solid #FFD700;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #FFF9E6;
+        }
+        .profile-table input[type="submit"] {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 10px auto;
+        }
+        .profile-table input[type="submit"]:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-form">
+        <h1 class="profile-heading">EDIT PROFILE</h1>
+        <table class="profile-table">
+            <form method="post">
+                {%csrf_token%}
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" name="txt_name" value="{{technician.technician_name}}" required></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text" name="txt_email" value="{{technician.technician_email}}" required></td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td><input type="text" name="txt_contact" value="{{technician.technician_contact}}" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="btnsub" value="Save Changes">
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock content %}

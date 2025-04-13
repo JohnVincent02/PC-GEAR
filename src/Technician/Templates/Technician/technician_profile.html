@@ -1,0 +1,114 @@
+{% extends 'Technician/head.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECHNICIAN PROFILE</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+        .profile-heading {
+            text-align: center;
+            color: #FF8C00;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .profile-table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        .profile-table th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: left;
+            width: 30%;
+            font-size: 16px;
+        }
+        .profile-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+        .profile-table tr:last-child td {
+            border-bottom: none;
+        }
+        .action-links {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .action-links a {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 10px;
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .action-links a:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <h1 class="profile-heading">TECHNICIAN PROFILE</h1>
+        
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <table class="profile-table">
+                <tr>
+                    <th>Name</th>
+                    <td>{{technician.technician_name}}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{technician.technician_email}}</td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td>{{technician.technician_contact}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="action-links">
+                        <a href="{% url 'Technician:editprofile' %}">Edit Profile</a>
+                        <a href="{% url 'Technician:changepassword' %}">Change Password</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>
+{% endblock content %}

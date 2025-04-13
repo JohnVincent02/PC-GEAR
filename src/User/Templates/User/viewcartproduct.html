@@ -1,0 +1,103 @@
+{% extends 'User/Head.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIEW CART PRODUCTS</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 20px; */
+        /* } */
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 95%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th {
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+            color: #000;
+            font-weight: bold;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        img {
+            border-radius: 5px;
+            object-fit: cover;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>VIEW CART PRODUCTS</h2>
+        <table border="1">
+            <tr>
+                <th>Sl no</th>
+                <th>Product Name</th>
+                <th>Product description</th>
+                <th>Product Quantity</th>
+                <th>Product price</th>
+                <th>Product photo</th>
+                <th>Product Subcategory</th>
+                <th>Product category</th>
+                <th>Actions</th>
+            </tr>
+            {% for i in product %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.product.product_name}}</td>
+                <td>{{i.product.product_details}}</td>
+                <td>{{i.cart_qty}}</td>
+                <td>{{i.product.product_price}}</td>
+                <td><img src="{{i.product.product_photo.url}}" width="60px" height="60px"></td>
+                <td>{{i.product.sub_category.subcategory_name}}</td>
+                <td>{{i.product.sub_category.category.category_name}}</td>
+                <td>
+                    <a href="{% url 'User:feedback' i.product.id %}">Feedback</a>
+                    <a href="{% url 'User:rating' i.product.id %}">Rating</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+  
+</body>
+</html>
+{% endblock content %}
+{% if msg %}
+<script>
+    alert('{{msg}}')
+    // window.location="{% url 'User:viewproducts' %}"
+</script>
+{% endif %}

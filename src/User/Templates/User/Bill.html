@@ -1,0 +1,142 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Product Bill</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        .bill-container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #444;
+        }
+        .flex-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .details-box {
+            width: 48%;
+            background: #fafafa;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .details-box h3 {
+            margin-top: 0;
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 12px;
+        }
+        .details-box p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: #333;
+        }
+        .booking-info {
+            margin-bottom: 25px;
+        }
+        .booking-info p {
+            margin: 6px 0;
+            font-size: 0.95em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 0.95em;
+            color: #333;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #222;
+        }
+        .total {
+            text-align: right;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+<div class="bill-container">
+    <h2>Product Bill</h2>
+
+    <div class="flex-section">
+        <div class="details-box">
+            <h3>User Details</h3>
+            <p><strong>Name:</strong> {{ booking.user.user_name }}</p>
+            <p><strong>Email:</strong> {{ booking.user.user_email }}</p>
+            <p><strong>Contact:</strong> {{ booking.user.user_contact }}</p>
+        </div>
+
+        <div class="details-box">
+            <h3>Seller Details</h3>
+            {% for cart_item in cart_items %}
+                <p><strong>Shop:</strong> {{ cart_item.product.shop.shop_name }}</p>
+                <p><strong>Email:</strong> {{ cart_item.product.shop.shop_email }}</p>
+                <p><strong>Contact:</strong> {{ cart_item.product.shop.shop_contact }}</p>
+                
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="booking-info">
+        <h3>Booking Details</h3>
+        <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+      
+
+          
+        </p>
+    </div>
+
+    <div>
+        <h3>Products</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Details</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart in cart_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ cart.product.product_name }}</td>
+                    <td>{{ cart.product.product_details }}</td>
+                    <td>{{ cart.cart_qty }}</td>
+                    <td>₹{{ cart.product.product_price }}</td>
+                    <td>₹{{ cart.cart_qty|mul:cart.product.product_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="total">Total Amount: ₹{{ booking.booking_amount }}</p>
+    </div>
+</div>
+</body>
+</html>
