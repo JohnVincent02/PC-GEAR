@@ -1,0 +1,225 @@
+{% extends 'Shop/head.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD PRODUCTS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+        .main-heading {
+            text-align: center;
+            color: #FF8C00;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        .form-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+            padding: 20px;
+        }
+        .data-table {
+            width: 100%;
+            margin: 40px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+            text-align: center;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) {
+            background-color: #fffaf0;
+        }
+        input[type="text"], select {
+            width: 90%;
+            padding: 10px 15px;
+            border: 2px solid #FFD700;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #FFF9E6;
+        }
+        input[type="file"] {
+            padding: 5px;
+        }
+        input[type="submit"] {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+        .action-link {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 0 5px;
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .action-link:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+        img {
+            border-radius: 4px;
+            border: 1px solid #FFD700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+
+        
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <h1 class="main-heading">ADD PRODUCTS</h1>
+            <table class="form-table">
+                <tr>
+                    <td>Product Name</td>
+                    <td><input type="text" name="txt_productname" id="txt_productname" required></td>
+                </tr>
+                <tr>
+                    <td>Details</td>
+                    <td><input type="text" name="txt_productdetails" id="txt_productdetails" required></td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td><input type="text" name="txt_productprice" id="txt_productprice" required></td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="photo" id="photo" required></td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>
+                        <select name="sel_category" id="selcategory" required>
+                            <option value="">---- Select ----</option>
+                            {% for i in catdata %}
+                            <option value="{{i.id}}">{{i.category_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sub Category</td>
+                    <td>
+                        <select name="sel_subcategory" id="selsubcategory" required>
+                            <option value="">---- Select ----</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Submit" name="btn_submit">
+                    </td>
+                </tr>
+            </table>
+
+            <table class="data-table">
+                <tr>
+                    <th>SL NO</th>
+                    <th>Product Name</th>
+                    <th>Details</th>
+                    <th>Photo</th>
+                    <th>Price</th>
+                    <th>Sub Category</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+                {% for i in addproducts %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.product_name}}</td>
+                    <td>{{i.product_details}}</td>
+                    <td><img src="{{ i.product_photo.url }}" width="100" height="100"></td>
+                    <td>{{i.product_price}}</td>
+                    <td>{{i.sub_category.subcategory_name}}</td>
+                    <td>{{i.sub_category.category.category_name}}</td>
+                    <td>
+                        <a href="{% url 'Shop:deleteproducts' i.id %}" class="action-link">Delete</a><br><br>
+                        <a href="{% url 'Shop:addstock' i.id %}" class="action-link">Add Stock</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $("#selcategory").change(function () {
+            var did = $(this).val();
+            var ur = "{% url 'Shop:ajaxsubcategory' %}"
+            $.ajax({
+                url: ur,
+                data: { did: did, },
+                success: function (data) {
+                    $("#selsubcategory").html(data);
+                },
+            });
+        });
+    </script>
+</body>
+
+</html>
+{% endblock content %}

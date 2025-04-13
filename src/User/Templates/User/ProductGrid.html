@@ -1,0 +1,34 @@
+<div class="product-grid" id="result">
+    {% for i, j in viewproducts %}
+    <div class="product-card">
+        <div class="product-img-container">
+            <img src="{{ i.product_photo.url }}" class="product-img" alt="{{ i.product_name }}">
+        </div>
+        <div class="card-body">
+            <h5 class="product-title">{{ i.product_name }}</h5>
+            <span class="product-price">₹{{ i.product_price }}</span>
+            <span class="product-category">{{ i.sub_category.subcategory_name }}</span>
+            
+            <div class="star-rating">
+                {% for k in ar %}
+                    {% if k <= j %}
+                        <i class="fas fa-star star-filled"></i>
+                    {% else %}
+                        <i class="far fa-star star-empty"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            <a href="{% url 'User:addcart' i.id %}" class="btn btn-add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="no-results">
+        <i class="fas fa-box-open fa-2x mb-3"></i>
+        <h5 class="fs-5">No products found</h5>
+        <p class="fs-6">Adjust your search filters</p>
+    </div>
+    {% endfor %}
+</div>

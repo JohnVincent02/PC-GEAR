@@ -1,0 +1,206 @@
+{% extends 'Shop/head.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSIGN TO DELIVERY AGENTS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+        .main-heading {
+            text-align: center;
+            color: #FF8C00;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .filter-container {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .filter-container select {
+            padding: 10px 15px;
+            border: 2px solid #FFD700;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #FFF9E6;
+            margin: 0 10px;
+            min-width: 200px;
+        }
+        .filter-container input[type="submit"] {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+        .filter-container input[type="submit"]:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+        .delivery-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+            overflow-x: auto;
+        }
+        .delivery-table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        .delivery-table th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        .delivery-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .delivery-table tr:last-child td {
+            border-bottom: none;
+        }
+        .delivery-table tr:nth-child(even) {
+            background-color: #fffaf0;
+        }
+        .delivery-table img {
+            border-radius: 50%;
+            border: 2px solid #FFD700;
+            object-fit: cover;
+        }
+        .action-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .action-link:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+        }
+        .status-completed {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="main-heading">VIEW DELIVERY AGENTS</h1>
+    
+    <div class="filter-container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <select name="sel_district" id="sel_district">
+                <option value="">Select District</option>
+                {% for i in dist %}
+                <option value="{{i.id}}">{{i.district_name}}</option>
+                {% endfor %}
+            </select>
+            <select name="sel_place" id="sel_place">
+                <option value="">Select Place</option>
+                {% for i in plc %}
+                <option value="{{i.id}}">{{i.place_name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Filter" name="btn_submit">
+        </form>
+    </div>
+
+    <div class="delivery-container">
+        <table class="delivery-table">
+            <tr>
+                <th>Sl No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Photo</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Action</th>
+            </tr>
+            {% for i in viewdeliveryboy %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.deliveryboy_name}}</td>
+                <td>{{i.deliveryboy_email}}</td>
+                <td>{{i.deliveryboy_contact}}</td>
+                <td>{{i.deliveryboy_address}}</td>
+                <td><img src="{{i.deliveryboy_photo.url}}" width="80" height="80" alt="Delivery Agent Photo"></td>
+                <td>{{i.place.district.district_name}}</td>
+                <td>{{i.place.place_name}}</td>
+                <td>
+                    <a href="{% url 'Shop:assigndelivery' i.id sid %}" class="action-link">ASSIGN</a>
+                    {% if i.booking.booking_status == 4 %}
+                    <span class="status-completed">DELIVERED</span>
+                    <a href="{% url 'Shop:viewfeedback' i.product.id %}" class="action-link">VIEW FEEDBACK</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table><br><br><br><br><br><br>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $("#sel_district").change(function () {
+            var did = $(this).val();
+            var ur = "{% url 'Guest:ajaxplace' %}"
+            $.ajax({
+                url: ur,
+                data: { did: did },
+                success: function (data) {
+                    $("#sel_place").html(data);
+                },
+            });
+        });
+    </script>
+
+    {% if msg %}
+    <script>
+        alert("{{msg}}");
+        window.location="{% url 'Shop:viewdeliveryboy' sid %}";
+    </script>
+    {% endif %}
+</body>
+</html>
+{% endblock content %}

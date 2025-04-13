@@ -1,0 +1,92 @@
+{% extends 'DeliveryBoy/head.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Delivery Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        table {
+            width: 500px;
+            margin: 30px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+        }
+        th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            width: 30%;
+        }
+        input[type="text"] {
+            width: 90%;
+            padding: 10px 15px;
+            border: 2px solid #FFD700;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #FFF9E6;
+        }
+        input[type="submit"] {
+            background-color: white;
+            color: #FF8C00;
+            border: 2px solid #FF8C00;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #FF8C00;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <form method="post">
+            {%csrf_token%}
+            <tr>
+                <th>Name</th>
+                <td><input type="text" name="txt_name" value="{{deliveryboy.deliveryboy_name}}" required></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><input type="text" name="txt_email" value="{{deliveryboy.deliveryboy_email}}" required></td>
+            </tr>
+            <tr>
+                <th>Contact</th>
+                <td><input type="text" name="txt_contact" value="{{deliveryboy.deliveryboy_contact}}" required></td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td><input type="text" name="txt_address" value="{{deliveryboy.deliveryboy_address}}" required></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsub" value="Submit">
+                </td>
+            </tr>
+        </form>
+    </table>
+</body>
+</html>
+{% endblock content %}

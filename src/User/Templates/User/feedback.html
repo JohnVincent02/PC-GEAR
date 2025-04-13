@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEEDBACK</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .feedback-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFA500;
+            background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+            border-radius: 5px;
+            font-size: 14px;
+            min-height: 80px;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #FF8C00;
+            box-shadow: 0 0 5px rgba(255,140,0,0.5);
+        }
+        input[type="submit"] {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #FF8C00, #FF6B00);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-container">
+        <h1>FEEDBACK</h1>
+        <table>
+            <form method="post">
+                {%csrf_token%}
+                <tr>
+                    <td>Your Feedback:</td>
+                    <td><textarea name="txt_feedback" placeholder="Share your thoughts with us..."></textarea></td>
+                </tr>  
+                <tr>
+                    <td colspan="2" style="border: none; padding-top: 20px;">
+                        <input type="submit" name="btnsub" value="Submit Feedback">
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+</body>
+</html>

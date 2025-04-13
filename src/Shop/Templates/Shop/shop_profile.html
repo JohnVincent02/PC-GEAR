@@ -1,0 +1,158 @@
+{% extends 'Shop/head.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHOP PROFILE</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px 20px;
+            margin: 0;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #e67e22;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .profile-heading {
+            
+            text-align: center;
+            color: #FF8C00;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        
+        }
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        table {
+            width: 100%;
+            margin: 30px auto;
+            border-collapse: separate;
+            background-color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            border-spacing: 0;
+        }
+        th {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            text-align: left;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:nth-child(even) {
+            background-color: #fffaf0;
+        }
+        tr:hover {
+            background-color: #ffeedd;
+        }
+        .action-links a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+        .action-links a:hover {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+        .footer-note {
+            text-align: center;
+            color: white;
+            background-color: #FF8C00;
+            padding: 15px;
+            margin-top: 40px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .content-block {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <h1 class="profile-heading">PROFILE</h1>
+            <h2>SHOP PROFILE</h2>
+            
+            <div class="content-block">
+                <table>
+                    <tr>
+                        <th width="30%">Shop Name</th>
+                        <td>{{shop.shop_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Shop Email</th>
+                        <td>{{shop.shop_email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td>{{shop.shop_contact}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{shop.shop_address}}</td>
+                    </tr>
+                    <tr>
+                        <th>District</th>
+                        <td>{{shop.place.district.district_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Place</th>
+                        <td>{{shop.place.place_name}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="action-links">
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="{% url 'Shop:editprofile' %}">Edit Profile</a>
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="{% url 'Shop:changepassword' %}">Change Password</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+
+        </form>
+    </div>
+</body>
+
+</html>
+{% endblock content %}

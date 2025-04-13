@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC GEAR - Login</title>
+    <link rel="stylesheet" href="{% static 'Main/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'Main/css/main.css' %}">
+</head>
+
+<body>
+    <!-- Start Header Area -->
+    <header class="header_area sticky-header">
+        <div class="main_menu">
+            <nav class="navbar navbar-expand-lg navbar-light main_box">
+                <div class="container">
+                    <!-- <a class="navbar-brand logo_h" href="index.html"><img src="{% static 'Main/img/logo.png' %}" alt=""></a> -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav menu_nav ml-auto">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'Guest:index' %}">Home</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'Guest:login' %}">Login</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- End Header Area -->
+
+    <!-- Start Login Box Area -->
+    <section class="login_box_area section_gap">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login_form_inner">
+                        <h3 class="text-center">LOGIN</h3>
+                        <form class="row login_form" action="" method="post" enctype="multipart/form-data" id="contactForm" novalidate="novalidate">
+                            {% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="txt_email" name="txt_email" placeholder="Email">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="password" name="txt_password" placeholder="Password">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <button type="submit" class="primary-btn">Log In</button>
+                                <a href="{% url 'Guest:forgotpassword' %}" class="d-block text-center mt-2">Forgot Password?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Login Box Area --><br><br><br><br>
+
+    <!-- Footer Area -->
+    <footer class="footer-area section_gap">
+        <div class="container text-center">
+            <p>&copy; <script>document.write(new Date().getFullYear());</script> All rights reserved | PC GEAR</p>
+        </div>
+    </footer>
+    <!-- End Footer Area -->
+
+    {% if msg %}
+    <script>
+        alert('{{ msg }}');
+    </script>
+    {% endif %}
+
+    <script src="{% static 'Main/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'Main/js/vendor/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

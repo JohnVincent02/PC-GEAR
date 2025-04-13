@@ -1,0 +1,41 @@
+{% extends 'User/Head.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg" style="border-color: #FFD700;">
+                <div class="card-header text-center" style="background: linear-gradient(135deg, #FFA500, #FFD700);">
+                    <h4 style="color: white;">Edit Profile</h4>
+                </div>
+                <div class="card-body" style="background-color: #FFF8E1;">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label"><strong style="color: #FF8C00;">Name</strong></label>
+                            <input type="text" name="txt_name" class="form-control" value="{{ user.user_name }}" required style="border-color: #FFD700;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong style="color: #FF8C00;">Email</strong></label>
+                            <input type="email" name="txt_email" class="form-control" value="{{ user.user_email }}" required style="border-color: #FFD700;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong style="color: #FF8C00;">Contact</strong></label>
+                            <input type="text" name="txt_contact" class="form-control" value="{{ user.user_contact }}" required style="border-color: #FFD700;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong style="color: #FF8C00;">Address</strong></label>
+                            <input type="text" name="txt_address" class="form-control" value="{{ user.user_address }}" required style="border-color: #FFD700;">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn" style="background: linear-gradient(135deg, #FFA500, #FFD700); color: white; border-color: #FF8C00;">Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'User/Head.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">MY PROFILE</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped shadow-lg mx-auto" style="max-width: 600px;">
+            <tr class="text-center" style="background: linear-gradient(135deg, #FFA500, #FFD700);">
+                <td colspan="2">
+                    {% if user.user_photo %}
+                        <div style="background: linear-gradient(135deg, #FFA500, #FFD700); padding: 15px; border-radius: 50%; display: inline-block;">
+                            <img src="{{ user.user_photo.url }}" class="rounded-circle" width="150px" height="150px" alt="User Photo" style="border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        </div>
+                    {% else %}
+                        <div style="background: linear-gradient(135deg, #FFA500, #FFD700); padding: 20px; border-radius: 50%; display: inline-block;">
+                            <p style="color: white; margin: 0; font-weight: bold;">No photo available</p>
+                        </div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td>{{ user.user_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>{{ user.user_email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Contact</strong></td>
+                <td>{{ user.user_contact }}</td>
+            </tr>
+            <tr>
+                <td><strong>Address</strong></td>
+                <td>{{ user.user_address }}</td>
+            </tr>
+            <tr>
+                <td><strong>District</strong></td>
+                <td>{{ user.place.district.district_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Place</strong></td>
+                <td>{{ user.place.place_name }}</td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2">
+                    <a href="{% url 'User:editprofile' %}" class="btn btn-primary btn-sm">Edit Profile</a>
+                    <a href="{% url 'User:changepassword' %}" class="btn btn-danger btn-sm">Change Password</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock content %}
